@@ -136,6 +136,12 @@
                 <div class="bread-chips" id="dynamic-sizes"></div>
             </div>
 
+            <!-- قسم الملاحظات الجديد -->
+            <div class="form-group" style="margin-bottom: 15px;">
+                <h4 style="margin-top:0; margin-bottom:8px; color:var(--text-dark);">ملاحظات ع الطلب (اختياري):</h4>
+                <input type="text" id="item-notes" placeholder="مثال: بدون طماطم، زيادة شطة، عيش محمص...">
+            </div>
+
             <div class="modal-qty-container">
                 <h4 class="modal-qty-title">الكمية:</h4>
                 <div class="modal-qty-controls">
@@ -278,7 +284,6 @@
                     { name: "أومليت سوسيس", price: 25 }, { name: "أومليت خضار", price: 25 },
                     { name: "أومليت بيتزا", price: 40 }, { name: "أومليت اباتشى", price: 40 },
                     { name: "بيض باذنجان ", price: 20 }, { name: "بيض ع بابا غنوج ", price: 22 }
-                    
                 ]
             },
             {
@@ -421,6 +426,9 @@
             
             document.getElementById('opt-title').innerText = item.name;
             document.getElementById('modal-qty-display').innerText = currentModalQty;
+            
+            // تصفير خانة الملاحظات عشان تفتح فاضية كل مرة
+            document.getElementById('item-notes').value = '';
 
             if (categoriesWithBread.includes(categoryId)) {
                 document.getElementById('bread-section').style.display = 'block';
@@ -484,6 +492,12 @@
             if (document.getElementById('size-section').style.display === 'block') {
                 const selectedSize = document.querySelector('input[name="size"]:checked').value;
                 finalName += ` [حجم ${selectedSize}]`;
+            }
+
+            // سحب الملاحظة اللي العميل كتبها وإضافتها لاسم الصنف
+            let itemNotes = document.getElementById('item-notes').value.trim();
+            if (itemNotes !== "") {
+                finalName += ` (${itemNotes})`;
             }
 
             let existingItem = cart.find(item => item.name === finalName && item.price === finalPrice);
